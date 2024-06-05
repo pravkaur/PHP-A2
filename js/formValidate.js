@@ -209,6 +209,11 @@ function load() {
 		year.appendChild(newYearOption);
 	}
 
+
+	document.getElementById("addMac").addEventListener("click", function () {
+		addItemToCart('1');
+	}, false);
+
 }
 
 // Add document load event listener
