@@ -8,31 +8,32 @@
 
 ******************/
 if ($_SERVER['REQUEST_METHOD'] == 'POST') {
-// Start by capturing the form inputs
-$fullName = filter_input(INPUT_POST, 'fullName', FILTER_SANITIZE_STRING);
-$email = filter_input(INPUT_POST, 'email', FILTER_VALIDATE_EMAIL);
-$address = filter_input(INPUT_POST, 'address', FILTER_SANITIZE_STRING);
-$city = filter_input(INPUT_POST, 'city', FILTER_SANITIZE_STRING);
-$province = filter_input(INPUT_POST, 'province', FILTER_SANITIZE_STRING);
-$postalCode = filter_input(INPUT_POST, 'postalCode', FILTER_SANITIZE_STRING);
-$creditCardNumber = filter_input(INPUT_POST, 'creditCardNumber', FILTER_SANITIZE_NUMBER_INT);
-$creditCardMonth = filter_input(INPUT_POST, 'creditCardMonth', FILTER_VALIDATE_INT, ['options' => ['min_range' => 1, 'max_range' => 12]]);
-$creditCardYear = filter_input(INPUT_POST, 'creditCardYear', FILTER_VALIDATE_INT, ['options' => ['min_range' => date('Y'), 'max_range' => date('Y') + 5]]);
-$creditCardType = isset($_POST['creditCardType']) ? $_POST['creditCardType'] : '';
-$cardName = filter_input(INPUT_POST, 'cardName', FILTER_SANITIZE_STRING);
+    // Start by capturing the form inputs
+    $fullName = filter_input(INPUT_POST, 'fullName', FILTER_SANITIZE_STRING);
+    $email = filter_input(INPUT_POST, 'email', FILTER_VALIDATE_EMAIL);
+    $address = filter_input(INPUT_POST, 'address', FILTER_SANITIZE_STRING);
+    $city = filter_input(INPUT_POST, 'city', FILTER_SANITIZE_STRING);
+    $province = filter_input(INPUT_POST, 'province', FILTER_SANITIZE_STRING);
+    $postalCode = filter_input(INPUT_POST, 'postalCode', FILTER_SANITIZE_STRING);
+    $creditCardNumber = filter_input(INPUT_POST, 'creditCardNumber', FILTER_SANITIZE_NUMBER_INT);
+    $creditCardMonth = filter_input(INPUT_POST, 'creditCardMonth', FILTER_VALIDATE_INT, ['options' => ['min_range' => 1, 'max_range' => 12]]);
+    $creditCardYear = filter_input(INPUT_POST, 'creditCardYear', FILTER_VALIDATE_INT, ['options' => ['min_range' => date('Y'), 'max_range' => date('Y') + 5]]);
+    $creditCardType = isset($_POST['creditCardType']) ? $_POST['creditCardType'] : '';
+    $cardName = filter_input(INPUT_POST, 'cardName', FILTER_SANITIZE_STRING);
 
-// Validate postal code using regex
-$postalCodePattern = '/^[A-Za-z]\d[A-Za-z][ -]?\d[A-Za-z]\d$/';
-$isPostalCodeValid = preg_match($postalCodePattern, $postalCode);
+    // Validate postal code using regex
+    $postalCodePattern = '/^[A-Za-z]\d[A-Za-z][ -]?\d[A-Za-z]\d$/';
+    $isPostalCodeValid = preg_match($postalCodePattern, $postalCode);
 
-// Validate quantities 
-$quantities = $_POST['quantities']; // Example: ['iMac' => 2, 'WD HDD' => 2, 'Drums' => 3]
-$validQuantities = true;
-foreach ($quantities as $quantity) {
-    if ($quantity !== '' && !filter_var($quantity, FILTER_VALIDATE_INT)) {
-        $validQuantities = false;
-        break;
-}
+    // Validate quantities 
+    $quantities = $_POST['quantities']; // Example: ['iMac' => 2, 'WD HDD' => 2, 'Drums' => 3]
+    $validQuantities = true;
+    foreach ($quantities as $quantity) {
+        if ($quantity !== '' && !filter_var($quantity, FILTER_VALIDATE_INT)) {
+            $validQuantities = false;
+            break;
+        }
+    }
 }
 ?>
 
@@ -45,68 +46,58 @@ foreach ($quantities as $quantity) {
     <link rel="stylesheet" href="main.css">
     <title>Thanks for your order!</title>
     <style>
-        body
-{
-    margin:10px auto;
-    width:700px;
-    font-family: 'Carrois Gothic';
-    border-radius: 10px;
-}
+        body {
+            margin: 10px auto;
+            width: 700px;
+            font-family: 'Carrois Gothic';
+            border-radius: 10px;
+        }
 
-h1,h2
-{
-    padding:2px;
-}
+        h1, h2 {
+            padding: 2px;
+        }
 
-h1
-{
-    font-size:22px;
+        h1 {
+            font-size: 22px;
+        }
 
-}
+        table {
+            font-size: 14px;
+            border: 2px solid #000;
+            width: 580px;
+            margin: 0px auto 1em auto;
+            border-radius: 10px;
+        }
 
-table
-{
-    font-size:14px;
-    border:2px solid #000;
-    width:580px;
-    margin:0px auto 1em auto;
-    border-radius: 10px;
-}
+        td {
+            border: 1px solid #000;
+            padding: 2px;
+            margin: 3px;
+        }
 
-td
-{
-    border: 1px solid #000;
-    padding: 2px;
-    margin: 3px;
-}
+        #rollingrick {
+            margin: 10px auto;
+            width: 650px;
+        }
 
-#rollingrick
-{
-    margin:10px auto;
-    width:650px;
-}
+        .alignright {
+            text-align: right;
+        }
 
-.alignright
-{
-    text-align:right;
-}
+        .bold {
+            font-weight: bold;
+        }
 
-.bold
-{
-    font-weight:bold;
-}
-
-.invoice
-{
-    border:#000 solid 2px;
-    padding:5px;
-    width:660px;
-    margin:0px auto 0px;
-    color:#000;
-    border-radius: 10px;
-    padding-bottom: 25px;
-}
-</style>
+        .invoice {
+            border: #000 solid 2px;
+            padding: 5px;
+            width: 660px;
+            margin: 0px auto 0px;
+            color: #000;
+            border-radius: 10px;
+            padding-bottom: 25px;
+        }
+    </style>
 </head>
 <body>
     <!-- Remember that alternative syntax is good and html inside php is bad -->

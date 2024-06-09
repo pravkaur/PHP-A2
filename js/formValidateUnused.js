@@ -1,12 +1,11 @@
-/********f************
-	   
-    Name: Pravleen Kaur
-    Date: 2024-05-27
-    Description:
-                Assignment 2 
-                Server-Side User Input Validation
+/******w************
+    
+	Assignment 2 Javascript
+	Name:
+	Date:
+	Description:
 
-*********************/
+*******************/
 
 const itemDescription = ["MacBook", "The Razer", "WD My Passport", "Nexus 7", "DD-45 Drums"];
 const itemPrice = [1899.99, 79.99, 179.99, 249.99, 119.99];
@@ -22,23 +21,6 @@ let orderTotal = 0;
  *          validation errors
  */
 function validate(e) {
-	// Hides all error elements on the page
-	hideErrors();
-
-	// Determine if the form has errors
-	if (formHasErrors()) {
-		// Prevents the form from submitting
-		e.preventDefault();
-
-		// When using onSubmit="validate()" in markup, returning false would prevent
-		// the form from submitting
-		return false;
-	}
-
-	// When using onSubmit="validate()" in markup, returning true would allow
-	// the form to submit
-	return true;
-
 
 }
 
@@ -71,178 +53,13 @@ function resetForm(e) {
 	return false;
 }
 
-function formFieldHasInput(fieldElement) {
-	// Check if the text field has a value
-	if (fieldElement.value == null || fieldElement.value.trim() == "") {
-		// Invalid entry
-		return false;
-	}
-
-	// Valid entry
-	return true;
-}
-
 /*
  * Does all the error checking for the form.
  *
  * return   True if an error was found; False if no errors were found
  */
 function formHasErrors() {
-	let errorFlag = false;
-	// Determine if any items are in the cart
-	// When the cart has not items, submission of form is halted
-	if (numberOfItemsInCart == 0) {
-		// Display an error message contained in a modal dialog element
 
-		const modal = document.querySelector("#cartError");
-		modal.showModal();
-
-		const closeModal = document.querySelector(".close-button");
-
-		closeModal.addEventListener("click", () => {
-			modal.close();
-			document.getElementById("qty1").focus();
-		});
-
-		// Form has errors
-		errorFlag = true;
-	}
-
-	//	Complete the validations below
-
-	// ALL REQUIRED FIELDS VALIDATION
-	let requiredFields = ["fullname", "address", "city", "postal", "email", "cardname", "cardnumber"];
-	for (let i = 0; i < requiredFields.length; i++) {
-		let textField = document.getElementById(requiredFields[i]);
-		if (!formFieldHasInput(textField)) {
-			document.getElementById(requiredFields[i] + "_error").style.display = "block";
-
-			if (!errorFlag) {
-				textField.focus();
-				textField.select();
-			}
-
-			// Raise the error flag
-			errorFlag = true;
-		}
-	}
-
-	// POSTAL CODE REGEX
-	// Canadian postal style
-	let regexPostal = /^[A-Za-z]\d[A-Za-z] \d[A-Za-z]\d$/;
-	let postalValue = document.getElementById("postal").value;
-
-	if (!regexPostal.test(postalValue)) {
-		document.getElementById("postalformat_error").style.display = "block";
-
-		if (!errorFlag) {
-			document.getElementById("postal").focus();
-			document.getElementById("postal").select();
-		}
-
-		errorFlag = true;
-	}
-
-	// EMAIL REGEX
-	// something @ something . something
-	let regexEmail = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
-	let emailValue = document.getElementById("email").value;
-
-	if (!regexEmail.test(emailValue)) {
-		document.getElementById("emailformat_error").style.display = "block";
-
-		if (!errorFlag) {
-			document.getElementById("email").focus();
-			document.getElementById("email").select();
-		}
-
-		errorFlag = true;
-	}
-
-	// Card radios checked
-	let cardBrand = ["visa", "amex", "mastercard"];
-	let cardChecked = false;
-
-	for (let i = 0; i < cardBrand.length && !cardChecked; i++) {
-		if (document.getElementById(cardBrand[i]).checked) {
-			cardChecked = true;
-		}
-	}
-	if (!cardChecked) {
-		document.getElementById("cardtype_error").style.display = "block";
-		// Raise the error flag
-		errorFlag = true;
-	}
-
-	// EXPIRY DATE VALIDATION
-	let selectedMonth = document.getElementById("month").value;
-	let selectedYear = document.getElementById("year").value;
-
-	// First check selection
-	if (selectedMonth == "- Month -") {
-		// Month wasn't selected
-		document.getElementById("month_error").style.display = "block";
-		// Raise the error flag
-		errorFlag = true;
-	}
-
-	// Today's and expiry date
-	let todaysDate = new Date();
-	let expiryDate = new Date(selectedYear, selectedMonth - 1, 1);
-
-	// Second check validity
-	if (expiryDate < todaysDate) {
-		document.getElementById("expiry_error").style.display = "block";
-		// Raise the error flag
-		errorFlag = true;
-	}
-
-	// CARD REGEX AND VALIDATION
-	let regexCard = /^\d{10}$/;
-	// something @ something . something
-	let cardDigits = document.getElementById("cardnumber").value;
-
-	// Regex part
-	if (!regexCard.test(cardDigits)) {
-		document.getElementById("invalidcard_error").style.display = "block";
-
-		if (!errorFlag) {
-			document.getElementById("cardnumber").focus();
-			document.getElementById("cardnumber").select();
-		}
-
-		// Raise error flag
-		errorFlag = true;
-	}
-
-	// Modulus part
-	let checkingFactors = [4, 3, 2, 7, 6, 5, 4, 3, 2];
-	let sum = 0;
-	for (let i = 0; i < 9; i++) {
-		sum += parseInt(cardDigits[i]) * checkingFactors[i];
-	}
-
-	let remainder = sum % 11;
-	let checkDigit = 11 - remainder;
-
-	// Get the last digit of the card number
-	let lastDigit = parseInt(cardDigits[9]);
-
-	// Compare the check digit with the last digit
-	if (checkDigit !== lastDigit) {
-		document.getElementById("invalidcard_error").style.display = "block";
-
-		if (!errorFlag) {
-			document.getElementById("cardnumber").focus();
-			document.getElementById("cardnumber").select();
-		}
-
-		// Raise error flag
-		errorFlag = true;
-	}
-
-	// Final function return
-	return errorFlag;
 }
 
 /*
@@ -318,7 +135,7 @@ function addItemToCart(itemNumber) {
 				// Update the total purchase in the cart
 				document.getElementById("cartTotal").innerHTML = formatCurrency(orderTotal);
 
-				// Determine if there are no items in the cart
+				// Determine if there are no items in the car
 				if (numberOfItemsInCart == 0) {
 					// Show the no items in cart list item 
 					document.getElementById("noItems").style.display = "block";
@@ -385,37 +202,13 @@ function load() {
 	//	Populate the year select with up to date values
 	let year = document.getElementById("year");
 	let currentDate = new Date();
-	for (let i = 0; i < 6; i++) { // Milan: I changed this line so that the year could be wrong
+	for (let i = 0; i < 7; i++) {
 		let newYearOption = document.createElement("option");
 		newYearOption.value = currentDate.getFullYear() + i;
 		newYearOption.innerHTML = currentDate.getFullYear() + i;
 		year.appendChild(newYearOption);
 	}
 
-	// Add event listener for the form submit
-	// document.getElementById("orderform").addEventListener("submit", validate);
-
-	// Add event listener for the "clear form" reset
-	document.getElementById("orderform").addEventListener("reset", resetForm);
-
-	// Add event listener for each item addition
-	document.getElementById("addMac").addEventListener("click", function () {
-		addItemToCart("1")
-	});
-	document.getElementById("addMouse").addEventListener("click", function () {
-		addItemToCart("2")
-	});
-	document.getElementById("addWD").addEventListener("click", function () {
-		addItemToCart("3")
-	});
-	document.getElementById("addNexus").addEventListener("click", function () {
-		addItemToCart("4")
-	});
-	document.getElementById("addDrums").addEventListener("click", function () {
-		addItemToCart("5")
-	});
-	// Hide all errors
-	hideErrors();
 }
 
 // Add document load event listener
